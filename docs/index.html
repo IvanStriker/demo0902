@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Эльдеран Лучезарный - Чародей Дикой Магии</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4a1e7c;
+            --secondary: #6d28d9;
+            --accent: #f59e0b;
+            --light: #f3e8ff;
+            --dark: #1f0a3d;
+            --danger: #dc2626;
+            --success: #16a34a;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #f3e8ff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(31, 10, 61, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg,
+                var(--accent),
+                var(--secondary),
+                var(--primary));
+            z-index: 10;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(rgba(74, 30, 124, 0.9), rgba(31, 10, 61, 0.9)),
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=800');
+            background-size: cover;
+            background-position: center;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '✨';
+            position: absolute;
+            font-size: 2rem;
+            animation: sparkle 3s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: translateY(0) rotate(0deg); }
+            50% { opacity: 1; transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .character-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: var(--light);
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8),
+                         0 0 20px rgba(245, 158, 11, 0.5);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .character-subtitle {
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-style: italic;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Character Image */
+        .character-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .character-image:hover {
+            transform: translateY(-5px);
+        }
+
+        .character-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: sepia(0.3) brightness(1.1);
+        }
+
+        .image-caption {
+            background: rgba(31, 10, 61, 0.9);
+            padding: 1rem;
+            font-style: italic;
+            color: var(--accent);
+            text-align: center;
+            border-top: 2px solid var(--secondary);
+        }
+
+        /* Character Info */
+        .character-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: rgba(109, 40, 217, 0.2);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(109, 40, 217, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(109, 40, 217, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light);
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        .section {
+            background: rgba(74, 30, 124, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(109, 40, 217, 0.5);
+            position: relative;
+        }
+
+        .section::before {
+            content: '✦';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--dark);
+            padding: 0 10px;
+            color: var(--accent);
+        }
+
+        .section-title {
+            color: var(--accent);
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Features List */
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed rgba(109, 40, 217, 0.3);
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li::before {
+            content: '⚡';
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        /* Spells Section */
+        .spells-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .spell-card {
+            background: rgba(31, 10, 61, 0.7);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .spell-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .spell-level {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: var(--secondary);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Quote */
+        .quote {
+            font-style: italic;
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 2rem;
+            text-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(31, 10, 61, 0.95);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid var(--secondary);
+            margin-top: 2rem;
+        }
+
+        .dnd-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--light);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+            border: 1px solid var(--accent);
+        }
+
+        /* Magic Effects */
+        .magic-sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-title {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        /* Animation for stats */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .stat-card:hover .stat-value {
+            animation: pulse 0.5s ease;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="character-title">Эльдеран Лучезарный</h1>
+            <p class="character-subtitle">Чародей Дикой Магии - Полуэльф 5 уровня</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Column - Image and Stats -->
+            <div class="left-column">
+                <div class="character-image">
+                    <img src="https://images.unsplash.com/photo-1549056572-75914d5d03fd?q=80&w=800" alt="Эльдеран Лучезарный - Чародей Дикой Магии">
+                    <div class="image-caption">
+                        "Магия течет в моих жилах как непредсказуемая река - иногда несущая жизнь, иногда разрушение"
+                    </div>
+                </div>
+
+                <!-- Character Stats -->
+                <div class="section">
+                    <h2 class="section-title">Характеристики</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">Харизма</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">14</div>
+                            <div class="stat-label">Ловкость</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">13</div>
+                            <div class="stat-label">Мудрость</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Телосложение</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">Интеллект</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Сила</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Features -->
+                <div class="section">
+                    <h2 class="section-title">Особенности класса</h2>
+                    <ul class="features-list">
+                        <li>Наследие Дикой Магии</li>
+                        <li>Искажение Удачи (Призывание Удачи)</li>
+                        <li>Волна Дикой Магии</li>
+                        <li>Магическая Нить (Харизма)</li>
+                        <li>Сопротивление магии очарования</li>
+                        <li>Темное зрение 60 футов</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column - Biography and Spells -->
+            <div class="character-info">
+                <!-- Biography -->
+                <div class="section">
+                    <h2 class="section-title">Биография</h2>
+                    <p>Эльдеран никогда не искал силу. Она нашла его сама, прорвавшись наружу потоком неконтролируемых сверкающих искр в момент смертельной опасности. Бывший писарь в библиотеке магического университета, он случайно пробудил в себе древнюю силу Дикой Магии.</p>
+                    <br>
+                    <p>Теперь Эльдеран странствует по миру, пытаясь понять природу своего дара и научиться контролировать хаотическую энергию, что бурлит в его крови. Каждое заклинание - это игра в кости с судьбой, где ставка - его собственная душа и жизни окружающих.</p>
+                </div>
+
+                <!-- Personality -->
+                <div class="section">
+                    <h2 class="section-title">Личность и Цели</h2>
+                    <p><strong>Характер:</strong> Любопытный, импульсивный, добросердечный, но постоянно борющийся со своим страхом перед собственной силой.</p>
+                    <p><strong>Цель:</strong> Найти "Сферу Стабильности Анораха" - артефакт, способный укротить дикую магию.</p>
+                    <p><strong>Слабость:</strong> Панически боится навредить невинным своей непредсказуемой магией.</p>
+                </div>
+
+                <!-- Spells -->
+                <div class="section">
+                    <h2 class="section-title">Заклинания</h2>
+                    <div class="spells-grid">
+                        <div class="spell-card">
+                            <span class="spell-level">Заговоры</span>
+                            <h3>Волшебная Рука</h3>
+                            <p>Магическая конечность для манипуляций</p>
+                        </div>
+                        <div class="spell-card">
+                            <span class="spell-level">1 уровень</span>
+                            <h3>Волна Магии</h3>
+                            <p>Рискнуть вызвать дикую магию</p>
+                        </div>
+                        <div class="spell-card">
+                            <span class="spell-level">2 уровень</span>
+                            <h3>Невидимость</h3>
+                            <p>Исчезнуть из поля зрения</p>
+                        </div>
+                        <div class="spell-card">
+                            <span class="spell-level">3 уровень</span>
+                            <h3>Огненный Шар</h3>
+                            <p>Опасное, но эффектное</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legendary Event -->
+                <div class="section">
+                    <h2 class="section-title">Легендарный случай</h2>
+                    <p>Во время битвы в пещере гоблинов, попытка наложить "Очарование" обернулась катаклизмом. Вместо заклинания, пространство заполнилось голубыми пушистыми грибами. Сражение прекратилось - гоблины, очарованные неожиданным зрелищем, забыли о битве.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="quote">
+            "Не называйте это даром. Дар - это когда тебе вручают отточенный клинок. Моя же сила - это острые осколки зеркала, которое разбилось у меня внутри."
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="dnd-badge">Dungeons & Dragons 5e Character</div>
+            <p style="margin-top: 1rem; opacity: 0.8;">Персонаж для кампании "Хроники Забытых Королевств"</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create magical sparkles
+        document.addEventListener('DOMContentLoaded', function() {
+            const colors = ['#f59e0b', '#8b5cf6', '#10b981', '#ef4444'];
+
+            function createSparkle(e) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'magic-sparkle';
+
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                sparkle.style.background = color;
+                sparkle.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+
+                sparkle.style.left = e.pageX + 'px';
+                sparkle.style.top = e.pageY + 'px';
+
+                document.body.appendChild(sparkle);
+
+                // Animation
+                sparkle.animate([
+                    { opacity: 0, transform: 'scale(0) translateY(0)' },
+                    { opacity: 1, transform: 'scale(1) translateY(-20px)' },
+                    { opacity: 0, transform: 'scale(0) translateY(-40px)' }
+                ], {
+                    duration: 1000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                });
+
+                // Remove after animation
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+
+            // Add sparkles on click
+            document.addEventListener('click', function(e) {
+                if (Math.random() > 0.7) { // 30% chance on click
+                    createSparkle(e);
+                }
+            });
+
+            // Add random sparkles
+            setInterval(() => {
+                if (Math.random() > 0.8) { // 20% chance every 2 seconds
+                    createSparkle({
+                        pageX: Math.random() * window.innerWidth,
+                        pageY: Math.random() * window.innerHeight
+                    });
+                }
+            }, 2000);
+
+            // Add hover effect to stat cards
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const value = this.querySelector('.stat-value');
+                    const original = value.textContent;
+
+                    // Animate number change
+                    value.animate([
+                        { opacity: 0.5, transform: 'translateY(-5px)' },
+                        { opacity: 1, transform: 'translateY(0)' }
+                    ], {
+                        duration: 300,
+                        easing: 'ease-out'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
